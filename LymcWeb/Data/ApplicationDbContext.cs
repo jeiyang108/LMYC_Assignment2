@@ -22,5 +22,8 @@ namespace LymcWeb.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<LymcWeb.Models.Boat> Boat { get; set; }
+        public DbSet<LymcWeb.Models.Reservation> Reservation { get; set; }
     }
 }

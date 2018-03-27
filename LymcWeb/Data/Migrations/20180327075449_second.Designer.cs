@@ -11,9 +11,10 @@ using System;
 namespace LymcWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180327075449_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,28 +114,6 @@ namespace LymcWeb.Data.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.ToTable("Boat");
-                });
-
-            modelBuilder.Entity("LymcWeb.Models.Reservation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CreatedBy");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<int>("ReservedBoat");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("ReservedBoat");
-
-                    b.ToTable("Reservation");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -250,18 +229,6 @@ namespace LymcWeb.Data.Migrations
                     b.HasOne("LymcWeb.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("CreatedBy");
-                });
-
-            modelBuilder.Entity("LymcWeb.Models.Reservation", b =>
-                {
-                    b.HasOne("LymcWeb.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy");
-
-                    b.HasOne("LymcWeb.Models.Boat", "Boat")
-                        .WithMany()
-                        .HasForeignKey("ReservedBoat")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
