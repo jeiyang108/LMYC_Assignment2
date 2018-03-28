@@ -107,7 +107,9 @@ namespace LymcWeb.Models
         public static void InitializeBoat(ApplicationDbContext db)
         {
             if (db.Boat.Any())
+            {
                 return;
+            }
 
             List<Boat> boats = new List<Boat>
             {
