@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using LymcWeb.Data;
@@ -7,6 +8,7 @@ using LymcWeb.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LymcWeb.Controllers
 {
@@ -14,24 +16,45 @@ namespace LymcWeb.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RolesController (ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public RolesController (ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = db;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         // GET: Roles
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var roles = _context.Roles.ToList();
-            return View(roles);
+            var roles = _roleManager.Roles;
+            return View(await roles.ToListAsync());
         }
 
         // GET: Roles/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var identityRole = await _roleManager.FindByIdAsync(id);
+            if (identityRole == null)
+            {
+                return NotFound();
+            }
+            
+            var users = _userManager.GetUsersInRoleAsync(identityRole.Id).Result;
+
+            var role = new RoleModel
+            {
+                RoleId = identityRole.Id,
+                RoleName = identityRole.Name,
+                Users = users
+            };
+            return View(role);
         }
 
         // GET: Roles/Create
@@ -43,12 +66,19 @@ namespace LymcWeb.Controllers
         // POST: Roles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IdentityRole identityRole)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                if (ModelState.IsValid)
+                {
+                    if (await _roleManager.RoleExistsAsync(identityRole.Name))
+                    {
+                        return View();
+                    }
+                }
+                await _roleManager.CreateAsync(identityRole);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -58,9 +88,37 @@ namespace LymcWeb.Controllers
         }
 
         // GET: Roles/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var identityRole = await _roleManager.FindByIdAsync(id);
+            if(identityRole == null)
+            {
+                return NotFound();
+            }
+
+            var usersRole = _userManager.GetUsersInRoleAsync(identityRole.Name).Result.ToList();
+            var users = await _userManager.Users.ToListAsync();
+
+            foreach (var u in usersRole)
+            {
+                if (users.Contains(u))
+                {
+                    users.Remove(u);
+                }
+            }
+
+            var role = new RoleModel
+            {
+                RoleId = identityRole.Id,
+                RoleName = identityRole.Name,
+                Users = users
+            };
+            return View(role);
         }
 
         // POST: Roles/Edit/5
@@ -81,19 +139,48 @@ namespace LymcWeb.Controllers
         }
 
         // GET: Roles/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var identityRole = await _roleManager.FindByIdAsync(id);
+
+            if (identityRole == null)
+            {
+                return NotFound();
+            }
+
+            var users = _userManager.GetUsersInRoleAsync(identityRole.Name).Result;
+
+            var role = new RoleModel
+            {
+                RoleId = identityRole.Id,
+                RoleName = identityRole.Name,
+                Users = users
+            };
+
+            return View(role);
         }
 
         // POST: Roles/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteConfirmed(string id)
         {
             try
             {
                 // TODO: Add delete logic here
+
+                var role = await _roleManager.FindByIdAsync(id);
+                var result = await _roleManager.DeleteAsync(role);
+
+                if (!result.Succeeded)
+                {
+                    return NotFound();
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -101,6 +188,23 @@ namespace LymcWeb.Controllers
             {
                 return View();
             }
+        }
+
+        // POST: Roles/Remove
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Remove(RoleModel roleModel)
+        {
+            var user = await _userManager.FindByIdAsync(roleModel.UserId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.RemoveFromRoleAsync(user, roleModel.RoleName);
+
+            return RedirectToAction(nameof(Details), new { id = roleModel.RoleId });
         }
     }
 }

@@ -11,9 +11,10 @@ using System;
 namespace LymcWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180329010233_Add roles")]
+    partial class Addroles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,7 +149,7 @@ namespace LymcWeb.Data.Migrations
 
                     b.Property<string>("RoleName");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UsersId");
 
                     b.HasKey("RoleId");
 
