@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace LymcWeb.Data.Migrations
+namespace LymcWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180330224713_Initial Migration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,6 +66,8 @@ namespace LymcWeb.Data.Migrations
 
                     b.Property<string>("Province");
 
+                    b.Property<string>("RoleModelRoleId");
+
                     b.Property<string>("SailingExperience");
 
                     b.Property<string>("SecurityStamp");
@@ -85,6 +88,8 @@ namespace LymcWeb.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("RoleModelRoleId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -135,6 +140,34 @@ namespace LymcWeb.Data.Migrations
                     b.HasIndex("ReservedBoat");
 
                     b.ToTable("Reservation");
+                });
+
+            modelBuilder.Entity("LymcWeb.Models.RoleModel", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RoleName");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("RoleModel");
+                });
+
+            modelBuilder.Entity("LymcWeb.Models.UserViewModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Role");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserViewModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -243,6 +276,13 @@ namespace LymcWeb.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("LymcWeb.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("LymcWeb.Models.RoleModel")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleModelRoleId");
                 });
 
             modelBuilder.Entity("LymcWeb.Models.Boat", b =>

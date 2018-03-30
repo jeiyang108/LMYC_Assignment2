@@ -26,6 +26,5 @@ namespace LymcWeb.Models
         public string MobileNumber { get; set; }
         [Display(Name = "Sailing Experience")]
         public string SailingExperience { get; set; }
-
     }
 }

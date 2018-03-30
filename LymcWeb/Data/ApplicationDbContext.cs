@@ -25,5 +25,8 @@ namespace LymcWeb.Data
 
         public DbSet<LymcWeb.Models.Boat> Boat { get; set; }
         public DbSet<LymcWeb.Models.Reservation> Reservation { get; set; }
+        public DbSet<LymcWeb.Models.ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<LymcWeb.Models.UserViewModel> UserViewModel { get; set; }
+        public DbSet<LymcWeb.Models.RoleModel> RoleModel { get; set; }
     }
 }
