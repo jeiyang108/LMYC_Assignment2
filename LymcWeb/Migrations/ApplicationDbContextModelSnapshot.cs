@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace LymcWeb.Data.Migrations
+namespace LymcWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180329010834_updated roles")]
-    partial class updatedroles
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

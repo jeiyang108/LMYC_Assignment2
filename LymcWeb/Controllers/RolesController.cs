@@ -102,21 +102,12 @@ namespace LymcWeb.Controllers
             }
 
             var usersRole = _userManager.GetUsersInRoleAsync(identityRole.Name).Result.ToList();
-            var users = await _userManager.Users.ToListAsync();
-
-            foreach (var u in usersRole)
-            {
-                if (users.Contains(u))
-                {
-                    users.Remove(u);
-                }
-            }
 
             var role = new RoleModel
             {
                 RoleId = identityRole.Id,
                 RoleName = identityRole.Name,
-                Users = users
+                Users = usersRole
             };
             return View(role);
         }
