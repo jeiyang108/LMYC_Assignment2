@@ -39,6 +39,12 @@ namespace LymcWeb
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("AllRoles", policy => policy.RequireRole("Admin", "Member"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,10 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>List of Users</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @*<a asp-action="Create">Create New</a>*@
+    <a asp-area="" asp-controller="Roles" asp-action="Index">User Roles</a>
 </p>
 <table class="table">
     <thead>
@@ -86,9 +87,20 @@
                 @Html.DisplayFor(modelItem => item.SailingExperience)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if(item.UserName.Equals("a"))
+                {
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                } else
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit Roles</a>
+                    <text> | </text>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <text> | </text>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                }
+                
             </td>
         </tr>
 }

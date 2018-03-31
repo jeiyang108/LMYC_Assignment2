@@ -7,17 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LymcWeb.Data;
 using LymcWeb.Models;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LymcWeb.Controllers
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class ApplicationUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ApplicationUsersController(ApplicationDbContext context)
+        public ApplicationUsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: ApplicationUsers
@@ -53,20 +57,20 @@ namespace LymcWeb.Controllers
         // POST: ApplicationUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,Street,City,Province,PostalCode,Country,MobileNumber,SailingExperience,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        {
-            var PasswordHash = new PasswordHasher();
-            if (ModelState.IsValid)
-            {
-                applicationUser.PasswordHash = PasswordHash.HashPassword(applicationUser.PasswordHash);
-                _context.Add(applicationUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicationUser);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("FirstName,LastName,Street,City,Province,PostalCode,Country,MobileNumber,SailingExperience,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
+        //{
+        //    var PasswordHash = new PasswordHasher();
+        //    if (ModelState.IsValid)
+        //    {
+        //        applicationUser.PasswordHash = PasswordHash.HashPassword(applicationUser.PasswordHash);
+        //        _context.Add(applicationUser);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(applicationUser);
+        //}
 
         // GET: ApplicationUsers/Edit/5
         public async Task<IActionResult> Edit(string id)
@@ -87,7 +91,7 @@ namespace LymcWeb.Controllers
                 UserName = applicationUser.UserName
             };
             ViewBag.Role = new SelectList(_context.Roles, "Name", "Name");
-            return View(applicationUser);
+            return View(userViewModel);
         }
 
         // POST: ApplicationUsers/Edit/5
@@ -98,30 +102,11 @@ namespace LymcWeb.Controllers
         //[Bind("FirstName,LastName,Street,City,Province,PostalCode,Country,MobileNumber,SailingExperience,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")]
         public async Task<IActionResult> Edit(UserViewModel userViewModel)
         {
-            //if (id != applicationUser.Id)
-            //{
-            //    return NotFound();
-            //}
-
             if (ModelState.IsValid)
             {
-                //try
-                //{
-                //    _context.Update(applicationUser);
-                //    await _context.SaveChangesAsync();
-                //}
-                //catch (DbUpdateConcurrencyException)
-                //{
-                //    if (!ApplicationUserExists(applicationUser.Id))
-                //    {
-                //        return NotFound();
-                //    }
-                //    else
-                //    {
-                //        throw;
-                //    }
-                //}
+
                 var updatedUser = _context.Users.SingleOrDefault(x => x.Id == userViewModel.Id);
+                await this._userManager.AddToRoleAsync(updatedUser, userViewModel.Role);
                 
                 return RedirectToAction(nameof(Index));
             }
@@ -138,7 +123,7 @@ namespace LymcWeb.Controllers
 
             var applicationUser = await _context.ApplicationUser
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
+            if (applicationUser == null || applicationUser.UserName.Equals("a"))
             {
                 return NotFound();
             }

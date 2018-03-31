@@ -4,10 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>List of Boats</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+    {
+        <a asp-action="Create">Create New</a>
+    }
+
 </p>
 <table class="table">
     <thead>
@@ -31,7 +35,7 @@
                     @Html.DisplayNameFor(model => model.RecordCreationDate)
                 </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.CreatedBy)
             </th>
             <th></th>
         </tr>
@@ -58,12 +62,22 @@
                 @Html.DisplayFor(modelItem => item.RecordCreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.FirstName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BoatId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BoatId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BoatId">Delete</a>
+                @if ((await AuthorizationService.AuthorizeAsync(User, "AllRoles")).Succeeded)
+                {
+                    <a asp-action="Details" asp-route-id="@item.BoatId">Details</a>
+                }
+                @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.BoatId">Edit</a>
+                    <text> | </text>
+                    <a asp-action="Details" asp-route-id="@item.BoatId">Details</a>
+                    <text> | </text>
+                    <a asp-action="Delete" asp-route-id="@item.BoatId">Delete</a>
+                }
+                
             </td>
         </tr>
 }

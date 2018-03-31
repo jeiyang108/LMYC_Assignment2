@@ -47,14 +47,24 @@
             @Html.DisplayFor(model => model.RecordCreationDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.CreatedBy)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.Id)
+            @Html.DisplayFor(model => model.User.FirstName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.BoatId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.BoatId">Edit</a>
+        <text> | </text>
+        <a asp-action="Index">Back to List</a>
+    }
+    else
+    {
+        <a asp-action="Index">Back to List</a>
+
+    }
+
 </div>

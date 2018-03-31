@@ -7,7 +7,6 @@
 <h2>Details</h2>
 
 <div>
-    <h4>ApplicationUser</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -100,6 +99,14 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (Model.UserName.Equals("a"))
+    {
+        <a asp-action="Index">Back to List</a>
+    } else
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <text> | </text>
+        <a asp-action="Index">Back to List</a>
+    }
+    
 </div>
