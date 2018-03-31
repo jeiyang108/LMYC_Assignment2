@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LymcWeb.Data;
 using LymcWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LymcWeb.Controllers
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class RolesController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -139,7 +141,7 @@ namespace LymcWeb.Controllers
 
             var identityRole = await _roleManager.FindByIdAsync(id);
 
-            if (identityRole == null)
+            if (identityRole == null || identityRole.Name.Equals("Admin"))
             {
                 return NotFound();
             }
@@ -157,7 +159,7 @@ namespace LymcWeb.Controllers
         }
 
         // POST: Roles/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
@@ -166,6 +168,12 @@ namespace LymcWeb.Controllers
                 // TODO: Add delete logic here
 
                 var role = await _roleManager.FindByIdAsync(id);
+
+                if (role.Name.Equals("Admin") || role == null)
+                {
+                    return NotFound();
+                }
+
                 var result = await _roleManager.DeleteAsync(role);
 
                 if (!result.Succeeded)

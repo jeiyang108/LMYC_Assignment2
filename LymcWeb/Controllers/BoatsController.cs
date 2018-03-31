@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LymcWeb.Data;
 using LymcWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LymcWeb.Controllers
 {
+    [Authorize(Policy = "AllRoles")]
     public class BoatsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -45,6 +47,7 @@ namespace LymcWeb.Controllers
             return View(boat);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         // GET: Boats/Create
         public IActionResult Create()
         {
@@ -57,6 +60,7 @@ namespace LymcWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Create([Bind("BoatId,BoatName,Picture,LengthInFeet,Make,Year,RecordCreationDate,CreatedBy")] Boat boat)
         {
             if (ModelState.IsValid)
@@ -69,6 +73,7 @@ namespace LymcWeb.Controllers
             return View(boat);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         // GET: Boats/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -91,6 +96,7 @@ namespace LymcWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Edit(int id, [Bind("BoatId,BoatName,Picture,LengthInFeet,Make,Year,RecordCreationDate,CreatedBy")] Boat boat)
         {
             if (id != boat.BoatId)
@@ -122,6 +128,7 @@ namespace LymcWeb.Controllers
             return View(boat);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         // GET: Boats/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -144,6 +151,7 @@ namespace LymcWeb.Controllers
         // POST: Boats/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var boat = await _context.Boat.SingleOrDefaultAsync(m => m.BoatId == id);

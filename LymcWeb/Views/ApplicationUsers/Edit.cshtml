@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Add User to Role</h2>
 
-<h4>ApplicationUser</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -60,15 +59,15 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input asp-for="UserName" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" />
-                <span asp-validation-for="Role" class="text-danger"></span>
+                
+                <select asp-for="Role" asp-items="ViewBag.Role"></select>
             </div>
-            @*<div class="form-group">
+                @*<div class="form-group">
             <label asp-for="NormalizedUserName" class="control-label"></label>
             <input asp-for="NormalizedUserName" class="form-control" />
             <span asp-validation-for="NormalizedUserName" class="text-danger"></span>
@@ -141,10 +140,10 @@
             <input asp-for="AccessFailedCount" class="form-control" />
             <span asp-validation-for="AccessFailedCount" class="text-danger"></span>
         </div>*@
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+</form>
     </div>
 </div>
 

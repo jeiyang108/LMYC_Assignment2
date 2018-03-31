@@ -2,8 +2,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<h2>Edit</h2>
-<h4>RoleModel</h4>
+<h2>List of Users</h2>
 <hr />
 @*<div class="row">
         <div class="col-md-4">
@@ -36,10 +35,10 @@
                 @Html.DisplayNameFor(model => model.Users.Single().Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Users.Single().LastName)
+                @Html.DisplayNameFor(model => model.Users.Single().FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Users.Single().FirstName)
+                @Html.DisplayNameFor(model => model.Users.Single().LastName)
             </th>
             <th></th>
         </tr>
@@ -55,12 +54,13 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                
+                @*<td>
                     @using (Html.BeginForm("Add", "Roles", FormMethod.Post))
                     {
                         <input type="hidden" asp-for="RoleId" />
@@ -68,7 +68,7 @@
                         <input type="hidden" asp-for="UserId" value="@item.Id" />
                         <input type="submit" value="Add" class="btn btn-link" />
                     }
-                </td>
+                </td>*@
             </tr>
 
         }
