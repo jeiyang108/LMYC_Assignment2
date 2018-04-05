@@ -1,0 +1,28 @@
+<div class="top-margin">
+
+  <div class="col-md-6 offset-md-3">
+    <div class="form-group">
+      <label for="startDate">Start Date: </label>
+      <input matInput [(ngModel)]="startDateT" [matDatepicker]="startDate" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+      <mat-datepicker #startDate></mat-datepicker>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date: </label>
+      <input matInput [(ngModel)]="endDateT" [matDatepicker]="endDate" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+      <mat-datepicker #endDate></mat-datepicker>
+    </div>
+
+    <div class="form-group">
+      <label for="boat">Boat: </label>
+      <select id="boat" [(ngModel)]="selectedBoat" class="control">
+        <option *ngFor="let boat of boats" [value]="boat.boatId"> {{boat.boatName}} </option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-info btn-lg" (click)="createReservation()">Create</button>
+
+  </div>
+</div>

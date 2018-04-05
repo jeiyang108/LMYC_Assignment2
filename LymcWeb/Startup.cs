@@ -13,6 +13,8 @@ using LymcWeb.Models;
 using LymcWeb.Services;
 using System.IO;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace LymcWeb
 {
@@ -28,6 +30,13 @@ namespace LymcWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -37,6 +46,24 @@ namespace LymcWeb
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
+
+            //Allows you to authenticate with jwt tokens.
+            //Change settings at appsettings.json
+            services.AddAuthentication()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["JwtIssuer"],
+                        ValidAudience = Configuration["JwtIssuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
+                        ClockSkew = TimeSpan.Zero //remove delay of token when expire.
+                    };
+                }).AddCookie();
+
 
             services.AddMvc();
 

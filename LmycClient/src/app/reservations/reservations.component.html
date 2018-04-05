@@ -1,0 +1,26 @@
+<div class="top-margin">
+
+  <h2> Reservation List </h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Boat</th>
+        <th>Created By</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of reservations">
+        <td>{{r.id}}</td>
+        <td>{{r.reservedBoat}}</td>
+        <td>{{r.createdBy}}</td>
+        <td>{{r.startDate}}</td>
+        <td>{{r.endDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-lg btn-info" routerLink="/newReservation">Reserve a Boat</button>
+</div>

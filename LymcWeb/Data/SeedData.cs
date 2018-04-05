@@ -97,7 +97,7 @@ namespace LymcWeb.Data
                 new Boat
                 {
                     BoatName = "Jeremiah Thomas",
-                    Picture = "http://www.boattown.com/assets/img/final/home/new-arrivals.jpg",
+                    Picture = "http://nassau.happeningmag.com/wp-content/uploads/2013/01/boat-show-300x201.jpg",
                     LengthInFeet = 54,
                     Make = "BoatSellet Ltd.",
                     Year = 1998,
@@ -127,7 +127,7 @@ namespace LymcWeb.Data
                 new Boat
                 {
                     BoatName = "Best Boat Ever",
-                    Picture = "http://www.boattown.com/assets/img/final/home/new-arrivals.jpg",
+                    Picture = "http://nassau.happeningmag.com/wp-content/uploads/2013/01/boat-show-300x201.jpg",
                     LengthInFeet = 59,
                     Make = "BoatLovers Ltd.",
                     Year = 2004,

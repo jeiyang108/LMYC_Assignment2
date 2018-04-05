@@ -47,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.BoatName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Picture)
+                <img src="@Html.DisplayFor(modelItem => item.Picture)" width="140" height="85">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LengthInFeet)
@@ -62,7 +62,7 @@
                 @Html.DisplayFor(modelItem => item.RecordCreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.FirstName)
+                @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
                 @if ((await AuthorizationService.AuthorizeAsync(User, "AllRoles")).Succeeded)
