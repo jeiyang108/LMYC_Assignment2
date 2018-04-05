@@ -13,6 +13,10 @@ using LymcWeb.Models;
 using LymcWeb.Services;
 using System.IO;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Options;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace LymcWeb
 {
@@ -28,6 +32,37 @@ namespace LymcWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add framework services.
+            services.AddLocalization(opts => {
+                opts.ResourcesPath = "Resources";
+            });
+
+            services.AddMvc()
+                .AddViewLocalization(
+                    opts => { opts.ResourcesPath = "Resources"; })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization(
+                //options => {
+                //    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                //        factory.Create(typeof(SharedResource));
+                //}
+                );
+
+            services.Configure<RequestLocalizationOptions>(opts => {
+                var supportedCultures = new List<CultureInfo> {
+                    new CultureInfo("en"),
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ko-KR") // Korean
+
+                };
+
+                opts.DefaultRequestCulture = new RequestCulture("en-US");
+                // Formatting numbers, dates, etc.
+                opts.SupportedCultures = supportedCultures;
+                // UI strings that we have localized.
+                opts.SupportedUICultures = supportedCultures;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -63,6 +98,9 @@ namespace LymcWeb
             }
 
             app.UseStaticFiles();
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+
 
             app.UseAuthentication();
 

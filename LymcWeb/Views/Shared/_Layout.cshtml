@@ -39,14 +39,14 @@
                         <li><a asp-area="" asp-controller="Boats" asp-action="Index">Boats</a></li>
                         <li><a asp-area="" asp-controller="Reservations" asp-action="Index">Reservation</a></li>
                     }
-                    
+
 
                     @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
                     {
                         <li><a asp-area="" asp-controller="ApplicationUsers" asp-action="Index">Users</a></li>
                     }
 
-                    
+
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -56,7 +56,18 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - LymcWeb</p>
+            
+             @{
+                string year = DateTime.Now.Year.ToString();
+            }
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>&copy; 2018 - LymcWeb</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                </div>
+            </div>
         </footer>
     </div>
 
