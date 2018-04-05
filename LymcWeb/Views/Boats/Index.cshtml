@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<LymcWeb.Models.Boat>
+@inject IViewLocalizer _Localizer
 
 @{
     ViewData["Title"] = "Index";
+    ViewData["PageTitle"] = _Localizer["List of Boats"];
+
 }
 
-<h2>List of Boats</h2>
+<h2>@ViewData["PageTitle"]</h2>
 
 <p>
     @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
@@ -13,9 +16,10 @@
     }
 
 </p>
-<table class="table">
-    <thead>
-        <tr>
+<form asp-controller="Boat" asp-action="BoatIndex" class="form-horizontal" novalidate>
+    <table class="table">
+        <thead>
+            <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.BoatName)
                 </th>
@@ -34,52 +38,54 @@
                 <th>
                     @Html.DisplayNameFor(model => model.RecordCreationDate)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BoatName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LengthInFeet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Make)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecordCreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.FirstName)
-            </td>
-            <td>
-                @if ((await AuthorizationService.AuthorizeAsync(User, "AllRoles")).Succeeded)
-                {
-                    <a asp-action="Details" asp-route-id="@item.BoatId">Details</a>
-                }
-                @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
-                {
-                    <a asp-action="Edit" asp-route-id="@item.BoatId">Edit</a>
-                    <text> | </text>
-                    <a asp-action="Details" asp-route-id="@item.BoatId">Details</a>
-                    <text> | </text>
-                    <a asp-action="Delete" asp-route-id="@item.BoatId">Delete</a>
-                }
-                
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BoatName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Picture)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LengthInFeet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Make)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecordCreationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.FirstName)
+                    </td>
+                    <td>
+                        @if (!(await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+                        {
+                            <a asp-action="Details" asp-route-id="@item.BoatId">Details</a>
+                        }
+                        @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.BoatId">Edit</a>
+                            <text> | </text>
+                            <a asp-action="Details" asp-route-id="@item.BoatId">Details</a>
+                            <text> | </text>
+                            <a asp-action="Delete" asp-route-id="@item.BoatId">Delete</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

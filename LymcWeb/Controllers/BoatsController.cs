@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using LymcWeb.Data;
 using LymcWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace LymcWeb.Controllers
 {
@@ -15,10 +18,12 @@ namespace LymcWeb.Controllers
     public class BoatsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IStringLocalizer<BoatsController> _localizer;
 
-        public BoatsController(ApplicationDbContext context)
+        public BoatsController(ApplicationDbContext context, IStringLocalizer<BoatsController> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         // GET: Boats
@@ -164,5 +169,27 @@ namespace LymcWeb.Controllers
         {
             return _context.Boat.Any(e => e.BoatId == id);
         }
+
+        public IActionResult BoatIndex(Boat model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            return View(model);
+        }
+
+        [HttpPost] 
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(1) }
+            );
+
+            return LocalRedirect(returnUrl);
+        }
+
     }
 }
