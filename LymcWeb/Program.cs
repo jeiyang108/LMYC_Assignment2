@@ -23,7 +23,7 @@ namespace LymcWeb
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
-                context.Database.Migrate();
+                //context.Database.Migrate();
 
                 try
                 {
