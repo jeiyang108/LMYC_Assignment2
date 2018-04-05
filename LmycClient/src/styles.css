@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+/* For Angaulr material framework (Matdatepicker. etc)*/
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+.top-margin {
+  margin-top: 50px;
+}

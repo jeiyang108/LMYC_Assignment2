@@ -67,7 +67,7 @@
                         @Html.DisplayFor(modelItem => item.RecordCreationDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.User.FirstName)
+                        @Html.DisplayFor(modelItem => item.User.UserName)
                     </td>
                     <td>
                         @if (!(await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
