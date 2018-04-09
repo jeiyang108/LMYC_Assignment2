@@ -29,9 +29,9 @@ Jei Yang
 A00951150
 jeiyang108@gmail.com
 ---------------------------------------------------------------------------------
-URL: https://lmycmicolejei.azurewebsites.net
+URL: https://lmycmicolejei2.azurewebsites.net
 ---------------------------------------------------------------------------------
-What we have not completed: 
+What we have not completed: N/A
 ---------------------------------------------------------------------------------
 Any major challenges:
 Learning new technologies (Angular, Core 2.0, etc)
