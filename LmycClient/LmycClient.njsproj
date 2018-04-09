@@ -27,6 +27,7 @@
     <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
     <EnableTypeScript>true</EnableTypeScript>
     <StartWebBrowser>true</StartWebBrowser>
+    <ExcludeFilesFromDeployment>LmycClient.njsproj</ExcludeFilesFromDeployment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
