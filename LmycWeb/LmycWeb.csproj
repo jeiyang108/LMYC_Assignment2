@@ -6,6 +6,11 @@
     <ExcludeFoldersFromDeployment>LmycClient</ExcludeFoldersFromDeployment>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\LmycJeiMicole2 - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\lmycmicolejei - Web Deploy.pubxml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.2.0" />
@@ -28,6 +33,7 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
   <ItemGroup>
