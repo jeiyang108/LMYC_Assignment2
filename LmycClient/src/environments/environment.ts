@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   //full URL to access the backend api
-  url: "https://localhost:44342/api/",
+  url: "http://lmycjeimicole2.azurewebsites.net/api/",
 };
