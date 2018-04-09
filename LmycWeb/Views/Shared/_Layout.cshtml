@@ -34,7 +34,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a href="http://localhost:4200/" target="_blank">Reservation</a></li>
+                    <li><a href="http://lmycjeimicole2-angular.azurewebsites.net/" target="_blank">Reservation</a></li>
                     @if ((await AuthorizationService.AuthorizeAsync(User, "AllRoles")).Succeeded)
                     {
                         <li><a asp-area="" asp-controller="Boats" asp-action="Index">Boats</a></li>
