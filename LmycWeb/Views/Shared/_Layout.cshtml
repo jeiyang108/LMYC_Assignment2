@@ -13,10 +13,13 @@
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+        <link rel="stylesheet" href="~/css/site.css"  asp-append-version="true" />
     </environment>
 </head>
-<body>
+<body style="padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #a0dade;">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -31,11 +34,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-
+                    <li><a href="http://localhost:4200/" target="_blank">Reservation</a></li>
                     @if ((await AuthorizationService.AuthorizeAsync(User, "AllRoles")).Succeeded)
                     {
                         <li><a asp-area="" asp-controller="Boats" asp-action="Index">Boats</a></li>
-                        <li><a href="http://localhost:4200/" target="_blank">Reservation</a></li>
+                        
                     }
 
                     <!--<li><a asp-area="" asp-controller="Reservations" asp-action="Index">Reservation</a></li>-->
