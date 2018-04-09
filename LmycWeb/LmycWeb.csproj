@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-LymcWeb-1F44E283-AAAD-4729-9579-367FF5300AB0</UserSecretsId>
-    <ExcludeFoldersFromDeployment>Lmyc\LmycClient</ExcludeFoldersFromDeployment>
+    <ExcludeFoldersFromDeployment>LmycClient</ExcludeFoldersFromDeployment>
   </PropertyGroup>
 
 
