@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LmycWeb</title>
+    <title>@ViewData["Title"] - Lmyc</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,34 +26,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">LmycWeb</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">LMYC</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 
                     @if ((await AuthorizationService.AuthorizeAsync(User, "AllRoles")).Succeeded)
                     {
                         <li><a asp-area="" asp-controller="Boats" asp-action="Index">Boats</a></li>
-                        <li><a asp-area="" asp-controller="Reservations" asp-action="Index">Reservation</a></li>
+                        <li><a href="http://localhost:4200/" target="_blank">Reservation</a></li>
                     }
 
-
+                    <!--<li><a asp-area="" asp-controller="Reservations" asp-action="Index">Reservation</a></li>-->
                     @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
                     {
                         <li><a asp-area="" asp-controller="ApplicationUsers" asp-action="Index">Users</a></li>
+                        <li><a asp-area="" asp-controller="Reservations" asp-action="Index">Reservation Managament</a></li>
                     }
 
                     <!-- CHANGE THIS LINK LATER -->
-                    <li><a href="http://localhost:4200/" target="_blank">Go to Angular Booking Page</a></li>
+                    
 
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="body-content">
         @RenderBody()
         <hr />
         <footer>
@@ -61,9 +61,9 @@
              @{
                 string year = DateTime.Now.Year.ToString();
             }
-            <div class="row">
+            <div class="row" style="padding-left:10px;">
                 <div class="col-sm-6">
-                    <p>&copy; 2018 - LymcWeb</p>
+                    <p>   &copy; 2018 - Jei & Micole</p>
                 </div>
                 
             </div>

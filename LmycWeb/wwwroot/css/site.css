@@ -1,13 +1,19 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #a0dade;
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+}
+.index-container {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.index-item {
+    padding: 20px;
 }
 
 /* Carousel */

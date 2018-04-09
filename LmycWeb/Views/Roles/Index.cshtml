@@ -1,45 +1,49 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+﻿<div class="container">
+    @model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Roles</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @if(item.Name.Equals("Admin"))
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Users</a>
-
-                } else
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Id">Users</a>
-                    <text> | </text>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-
-                }
-                
-
-            </td>
-        </tr>
+    @{
+        ViewBag.Title = "Index";
     }
 
-</table>
+    <h2>Roles</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.Name.Equals("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Users</a>
+
+                    }
+                    else
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Users</a>
+                        <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                    }
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

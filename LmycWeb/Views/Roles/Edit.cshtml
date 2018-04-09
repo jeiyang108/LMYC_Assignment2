@@ -1,80 +1,83 @@
-﻿@model LmycWeb.Models.RoleModel
-@{
-    ViewData["Title"] = "Edit";
-}
-<h2>List of Users</h2>
-<hr />
-@*<div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="RoleId" />
-                <div class="form-group">
-                    <label asp-for="RoleName" class="control-label"></label>
-                    <input asp-for="RoleName" class="form-control" />
-                    <span asp-validation-for="RoleName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UserId" class="control-label"></label>
-                    <input asp-for="UserId" class="form-control" />
-                    <span asp-validation-for="UserId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </form>
-        </div>
-    </div>*@
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Users.Single().UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Users.Single().Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Users.Single().FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Users.Single().LastName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Users)
-        {
+﻿<div class="container">
+    @model LmycWeb.Models.RoleModel
+    @{
+        ViewData["Title"] = "Edit";
+    }
+    <h2>List of Users</h2>
+    <hr />
+    @*<div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="RoleId" />
+                    <div class="form-group">
+                        <label asp-for="RoleName" class="control-label"></label>
+                        <input asp-for="RoleName" class="form-control" />
+                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserId" class="control-label"></label>
+                        <input asp-for="UserId" class="form-control" />
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>*@
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                
-                @*<td>
-                    @using (Html.BeginForm("Add", "Roles", FormMethod.Post))
-                    {
-                        <input type="hidden" asp-for="RoleId" />
-                        <input type="hidden" asp-for="RoleName" />
-                        <input type="hidden" asp-for="UserId" value="@item.Id" />
-                        <input type="submit" value="Add" class="btn btn-link" />
-                    }
-                </td>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.Single().UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.Single().Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.Single().FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.Single().LastName)
+                </th>
+                <th></th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
 
-        }
-    </tbody>
-</table>
+                    @*<td>
+                            @using (Html.BeginForm("Add", "Roles", FormMethod.Post))
+                            {
+                                <input type="hidden" asp-for="RoleId" />
+                                <input type="hidden" asp-for="RoleName" />
+                                <input type="hidden" asp-for="UserId" value="@item.Id" />
+                                <input type="submit" value="Add" class="btn btn-link" />
+                            }
+                        </td>*@
+                </tr>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
 </div>

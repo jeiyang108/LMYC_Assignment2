@@ -1,70 +1,73 @@
-﻿@model LmycWeb.Models.Boat
+﻿<div class="container">
+    @model LmycWeb.Models.Boat
 
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h2>Details</h2>
-
-<div>
-    <h4>Boat</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BoatName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BoatName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
-        <dd>
-            <img src="@Html.DisplayFor(model => model.Picture)" width="210" height="125">
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LengthInFeet)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LengthInFeet)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Make)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Make)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RecordCreationDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RecordCreationDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
-    </dl>
-</div>
-<div>
-    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
-    {
-        <a asp-action="Edit" asp-route-id="@Model.BoatId">Edit</a>
-        <text> | </text>
-        <a asp-action="Index">Back to List</a>
+    @{
+        ViewData["Title"] = "Details";
     }
-    else
-    {
-        <a asp-action="Index">Back to List</a>
 
-    }
+    <h2>Details</h2>
+
+    <div>
+        <h4>Boat</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.BoatName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.BoatName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Picture)
+            </dt>
+            <dd>
+                <img src="@Html.DisplayFor(model => model.Picture)" width="210" height="125">
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.LengthInFeet)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LengthInFeet)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Make)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Make)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Year)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Year)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.RecordCreationDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RecordCreationDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.FirstName)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdminRole")).Succeeded)
+        {
+            <a asp-action="Edit" asp-route-id="@Model.BoatId">Edit</a>
+            <text> | </text>
+            <a asp-action="Index">Back to List</a>
+        }
+        else
+        {
+            <a asp-action="Index">Back to List</a>
+
+        }
+
+    </div>
 
 </div>
